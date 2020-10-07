@@ -70,24 +70,28 @@ where
     }
 }
 
-pub fn line_segment_distance<T>(point: Point<T>, start: Point<T>, end: Point<T>) -> T
+pub fn line_segment_distance<T, C>(point: C, start: C, end: C) -> T
 where
     T: Float,
+    C: Into<Coordinate<T>>,
 {
+    let point = point.into();
+    let start = start.into();
+    let end = end.into();
+
     if start == end {
         return line_euclidean_length(Line::new(point, start));
     }
-    let dx = end.x() - start.x();
-    let dy = end.y() - start.y();
-    let r =
-        ((point.x() - start.x()) * dx + (point.y() - start.y()) * dy) / (dx.powi(2) + dy.powi(2));
+    let dx = end.x - start.x;
+    let dy = end.y - start.y;
+    let r = ((point.x - start.x) * dx + (point.y - start.y) * dy) / (dx.powi(2) + dy.powi(2));
     if r <= T::zero() {
         return line_euclidean_length(Line::new(point, start));
     }
     if r >= T::one() {
         return line_euclidean_length(Line::new(point, end));
     }
-    let s = ((start.y() - point.y()) * dx - (start.x() - point.x()) * dy) / (dx * dx + dy * dy);
+    let s = ((start.y - point.y) * dx - (start.x - point.x) * dy) / (dx * dx + dy * dy);
     s.abs() * dx.hypot(dy)
 }
 
