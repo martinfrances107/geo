@@ -20,7 +20,7 @@ where
 #[derive(Clone)]
 pub(crate) struct BasicNode<F>
 where
-    F: num_traits::Float,
+    F: Float,
 {
     coordinate: Coordinate<F>,
     // CLEANUP: should we get rid of this Option and have a Node trait?
@@ -30,7 +30,7 @@ where
 
 impl<F> GraphComponent for BasicNode<F>
 where
-    F: num_traits::Float,
+    F: Float,
 {
     fn label(&self) -> Option<&Label> {
         Some(&self.label)
@@ -51,7 +51,7 @@ where
 
 impl<F> Node<F> for BasicNode<F>
 where
-    F: num_traits::Float,
+    F: Float,
 {
     // JTS:   protected Coordinate coord; // only non-null if this node is precise
     fn coordinate(&self) -> &Coordinate<F> {
@@ -74,7 +74,7 @@ where
 
 impl<F> BasicNode<F>
 where
-    F: num_traits::Float,
+    F: Float,
 {
     // JTS:   protected EdgeEndStar edges;
     // JTS:
