@@ -1,11 +1,11 @@
 // JTS: import org.locationtech.jts.geom.Coordinate;
 // JTS: import org.locationtech.jts.geom.IntersectionMatrix;
 // JTS: import org.locationtech.jts.geom.Location;
-use super::{Coordinate, EdgeEnd, EdgeEndStar, GraphComponent, Label};
+use super::{Coordinate, EdgeEnd, EdgeEndStar, Float, GraphComponent, Label};
 
 pub(crate) trait Node<F>: GraphComponent
 where
-    F: num_traits::Float,
+    F: Float,
 {
     fn coordinate(&self) -> &Coordinate<F>;
     fn add_edge_end(&self, edge_end: EdgeEnd<F>);
