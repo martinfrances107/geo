@@ -58,7 +58,6 @@ where
     // JTS:     e.setNode(this);
     // JTS:   }
     pub fn add_edge_end(&mut self, mut edge_end: EdgeEnd<F>) {
-        // TODO: DELEGATE to "subclass" adapter?
         edge_end.set_node(self);
         // REVIEW: get rid of uwrap?
         self.edges.as_mut().unwrap().insert(edge_end);
@@ -76,7 +75,7 @@ where
         Node {
             coordinate,
             edges,
-            label: Label::new_with_on_location(0, None),
+            label: Label::new_with_geom_on_location(0, None),
         }
     }
 
@@ -89,6 +88,10 @@ where
     // REVIEW: boxed? option?
     pub fn edges(&self) -> Option<&EdgeEndBundleStar<F>> {
         self.edges.as_ref()
+    }
+
+    pub fn edges_mut(&mut self) -> Option<&mut EdgeEndBundleStar<F>> {
+        self.edges.as_mut()
     }
 
     // JTS:
@@ -151,7 +154,7 @@ where
     // JTS:       label.setLocation(argIndex, onLocation);
     // JTS:   }
     pub fn set_label_on_location(&mut self, geom_index: usize, location: Location) {
-        self.label.set_on_location(geom_index, location)
+        self.label.set_on_location(geom_index, Some(location))
     }
 
     // JTS:   /**
@@ -181,7 +184,7 @@ where
             Some(Location::Interior) => Location::Boundary,
             None | Some(Location::Exterior) => Location::Boundary,
         };
-        self.label.set_on_location(geom_index, new_location);
+        self.label.set_on_location(geom_index, Some(new_location));
     }
 
     // JTS:
