@@ -5,7 +5,8 @@ use crate::algorithm::polygon_distance_fast_path::*;
 use crate::kernels::*;
 use crate::utils::{coord_pos_relative_to_ring, CoordPos};
 use crate::{
-    Line, LineString, MultiLineString, MultiPoint, MultiPolygon, Point, Polygon, Triangle,
+    Coordinate, Line, LineString, MultiLineString, MultiPoint, MultiPolygon, Point, Polygon,
+    Triangle,
 };
 use num_traits::float::FloatConst;
 use num_traits::{Bounded, Float, Signed};
@@ -103,6 +104,16 @@ where
     /// Minimum distance between two Points
     fn euclidean_distance(&self, p: &Point<T>) -> T {
         Line::new(self.0, p.0).euclidean_length()
+    }
+}
+
+impl<T> EuclideanDistance<T, Coordinate<T>> for Coordinate<T>
+where
+    T: Float,
+{
+    /// Minimum distance between two Coordinates
+    fn euclidean_distance(&self, other: &Coordinate<T>) -> T {
+        Line::new(*self, *other).euclidean_length()
     }
 }
 
