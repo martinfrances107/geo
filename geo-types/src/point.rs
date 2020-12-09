@@ -1,4 +1,5 @@
 use crate::{Coordinate, CoordinateType};
+use approx::AbsDiffEq;
 use num_traits::Float;
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
@@ -406,6 +407,47 @@ where
     /// ```
     fn div(self, rhs: T) -> Point<T> {
         Point(self.0 / rhs)
+    }
+}
+
+impl<T> AbsDiffEq for Point<T>
+where
+    T: CoordinateType + Float,
+{
+    type Epsilon = T;
+
+    /// Points are said to be partially equal if absolute difference of
+    /// each of its coordinates are within a limit.
+    ///
+    /// # Test Stratergy PASS/FAIL
+    /// A) If the only difference is in the x coordinate.
+    /// B) If the only difference is in the y coordinate.
+    /// C) In both the x and y coordinate.
+    ///
+    ///
+    /// ```
+    /// use geo_types::Point;
+    /// use approx::AbsDiffEq;
+    /// let p = Point::new(1.0, 1.0);
+    /// let p_x = Point::new(0.999999, 1.0);
+    /// let p_y = Point::new(1.0, 1.00001);
+    /// let p_xy = Point::new(0.999999, 1.00001);
+    /// assert!(p.abs_diff_eq(&p_x, 1e-2));
+    /// assert!(!p.abs_diff_eq(&p_x, 1e-12));
+    /// assert!(p.abs_diff_eq(&p_y, 1e-2));
+    /// assert!(!p.abs_diff_eq(&p_y, 1e-12));
+    /// assert!(p.abs_diff_eq(&p_xy, 1e-2));
+    /// assert!(!p.abs_diff_eq(&p_xy, 1e-12));
+    /// ```
+    ///
+    #[inline]
+    fn default_epsilon() -> Self::Epsilon {
+        T::from(1e-6).unwrap()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &Point<T>, epsilon: Self::Epsilon) -> bool {
+        (self.x() - other.x()).abs() < epsilon && (self.y() - other.y()).abs() < epsilon
     }
 }
 

@@ -1,4 +1,7 @@
 use crate::{Coordinate, CoordinateType, Point};
+use approx::AbsDiffEq;
+use num_traits::float::Float;
+// use geo::coords_iter::CoordsIter;
 
 /// A line segment made up of exactly two
 /// [`Coordinate`s](struct.Coordinate.html).
@@ -164,6 +167,33 @@ impl<T: CoordinateType> From<[(T, T); 2]> for Line<T> {
         Line::new(coord[0], coord[1])
     }
 }
+
+// impl<T> AbsDiffEq for Line<T>
+// where
+//     T: CoordinateType + Float,
+// {
+//     type Epsilon = T;
+
+//     #[inline]
+//     fn default_epsilon() -> Self::Epsilon {
+//         T::from(1e-6).unwrap()
+//     }
+
+//     #[inline]
+//     fn abs_diff_eq(&self, other: &Line<T>, epsilon: Self::Epsilon) -> bool {
+//         let z = (*self).coords_iter().zip(*other.coords_iter());
+//         let mut is_match = true;
+//         for a_b in z {
+//             let (a, b) = a_b;
+//             if (a.x - b.x).abs() >= epsilon || (a.y - b.y).abs() >= epsilon {
+//                 println!("Fail {:?} {:?}", a, b);
+//                 is_match = false;
+//                 break;
+//             }
+//         }
+//         is_match
+//     }
+// }
 
 #[cfg(feature = "rstar")]
 impl<T> ::rstar::RTreeObject for Line<T>
