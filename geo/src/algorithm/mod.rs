@@ -25,6 +25,8 @@ pub mod convex_hull;
 pub mod coordinate_position;
 /// Iterate over geometry coordinates.
 pub mod coords_iter;
+/// Determins whether a 'LineString' is the same as another, but whoes points have a different order.
+pub mod cyclic_match;
 /// Dimensionality of a geometry and its boundary, based on OGC-SFA.
 pub mod dimensions;
 /// Calculate the minimum Euclidean distance between two `Geometries`.
