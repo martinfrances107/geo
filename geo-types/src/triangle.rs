@@ -58,7 +58,7 @@ impl<IC: Into<Coordinate<T>> + Copy, T: CoordNum> From<[IC; 3]> for Triangle<T> 
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "use-approx", feature = "approx", test))]
 impl<T> RelativeEq for Triangle<T>
 where
     T: AbsDiffEq<Epsilon = T> + CoordNum + RelativeEq,

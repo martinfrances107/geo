@@ -1,6 +1,6 @@
 use crate::{CoordFloat, CoordNum, Coordinate};
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 use approx::{AbsDiffEq, RelativeEq};
 
 use std::ops::{Add, Div, Mul, Neg, Sub};
@@ -424,7 +424,7 @@ where
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 impl<T> RelativeEq for Point<T>
 where
     T: AbsDiffEq<Epsilon = T> + CoordNum + RelativeEq,

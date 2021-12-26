@@ -1,6 +1,6 @@
 use crate::{polygon, CoordFloat, CoordNum, Coordinate, Polygon};
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 use approx::{AbsDiffEq, RelativeEq};
 
 /// An _axis-aligned_ bounded 2D rectangle whose area is
@@ -268,7 +268,7 @@ impl<T: CoordFloat> Rect<T> {
 
 static RECT_INVALID_BOUNDS_ERROR: &str = "Failed to create Rect: 'min' coordinate's x/y value must be smaller or equal to the 'max' x/y value";
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 impl<T> RelativeEq for Rect<T>
 where
     T: AbsDiffEq<Epsilon = T> + CoordNum + RelativeEq,
@@ -310,7 +310,7 @@ where
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 impl<T> AbsDiffEq for Rect<T>
 where
     T: AbsDiffEq<Epsilon = T> + CoordNum,

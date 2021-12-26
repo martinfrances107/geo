@@ -1,6 +1,6 @@
 use crate::{CoordNum, Point};
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 use approx::{AbsDiffEq, RelativeEq, UlpsEq};
 
 /// A lightweight struct used to store coordinates on the 2-dimensional
@@ -262,7 +262,7 @@ impl<T: CoordNum> Zero for Coordinate<T> {
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 impl<T: CoordNum + AbsDiffEq> AbsDiffEq for Coordinate<T>
 where
     T::Epsilon: Copy,
@@ -280,7 +280,7 @@ where
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "approx", feature = "use-approx", test))]
 impl<T: CoordNum + RelativeEq> RelativeEq for Coordinate<T>
 where
     T::Epsilon: Copy,
@@ -297,7 +297,7 @@ where
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "use-approx", feature = "approx", test))]
 impl<T: CoordNum + UlpsEq> UlpsEq for Coordinate<T>
 where
     T::Epsilon: Copy,

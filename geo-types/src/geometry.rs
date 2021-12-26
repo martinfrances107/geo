@@ -238,7 +238,7 @@ where
     }
 }
 
-#[cfg(any(feature = "approx", test))]
+#[cfg(any(feature = "use-approx", feature = "approx", test))]
 impl<T> RelativeEq for Geometry<T>
 where
     T: AbsDiffEq<Epsilon = T> + CoordNum + RelativeEq,
