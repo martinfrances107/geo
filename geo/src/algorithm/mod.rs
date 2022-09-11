@@ -69,6 +69,9 @@ pub use coordinate_position::CoordinatePosition;
 pub mod coords_iter;
 pub use coords_iter::CoordsIter;
 
+/// Determins whether a 'LineString' is the same as another, but whoes points have a different order.
+pub mod cyclic_match;
+
 /// Densify spherical geometry components
 pub mod densify_haversine;
 #[allow(deprecated)]
