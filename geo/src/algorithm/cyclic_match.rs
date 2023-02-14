@@ -1,5 +1,5 @@
 use crate::coords_iter::CoordsIter;
-use geo_types::Coordinate;
+use geo_types::Coord;
 use geo_types::{CoordFloat, LineString};
 
 pub trait CyclicMatch<T> {
@@ -24,7 +24,7 @@ where
         }
 
         // Remove repeated element. so cycle() will work.
-        let mut b: Vec<Coordinate<T>> = rhs.into_iter().collect();
+        let mut b: Vec<Coord<T>> = rhs.into_iter().collect();
         b.pop();
 
         let len = b.len() as i32;
@@ -48,7 +48,6 @@ where
                             }
                         } else {
                             // Restart.
-                            n_matches = 0;
                             n_restarts += 1;
                             if n_restarts > len {
                                 return false;
@@ -66,14 +65,14 @@ where
 mod tests {
     use super::*;
 
-    use geo_types::Coordinate;
+    use geo_types::Coord;
     use geo_types::LineString;
 
-    const A: Coordinate<f64> = Coordinate { x: 0., y: 0. };
-    const B: Coordinate<f64> = Coordinate { x: 0., y: 10. };
-    const C: Coordinate<f64> = Coordinate { x: 10., y: 10. };
-    const D: Coordinate<f64> = Coordinate { x: 0., y: 10. };
-    const E: Coordinate<f64> = Coordinate { x: 0.5, y: 0.5 };
+    const A: Coord<f64> = Coord { x: 0., y: 0. };
+    const B: Coord<f64> = Coord { x: 0., y: 10. };
+    const C: Coord<f64> = Coord { x: 10., y: 10. };
+    const D: Coord<f64> = Coord { x: 0., y: 10. };
+    const E: Coord<f64> = Coord { x: 0.5, y: 0.5 };
     #[test]
     fn test_cyclic_match() {
         let mut ls_x = LineString(vec![A, B, C, D]);
